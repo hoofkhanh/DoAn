@@ -212,34 +212,5 @@ public class QuanLyKhoSach {
 		}
 	}
 	
-	public void sapXepTheoCapBac() {	
-		int count=0;
-		for (SachGiaoKhoa sgk : list) {
-			if(sgk instanceof SachGiaoKhoa_Cap1) {
-				SachGiaoKhoa_Cap1 sgk_c1=new SachGiaoKhoa_Cap1();
-				sgk_c1=(SachGiaoKhoa_Cap1)sgk;
-				this.list.set(count, sgk_c1);
-				count++;
-			}
-		}
 		
-		for (SachGiaoKhoa sgk : list) {
-			if(sgk instanceof SachGiaoKhoa_Cap2) {
-				SachGiaoKhoa_Cap2 sgk_c2=new SachGiaoKhoa_Cap2();
-				sgk_c2=(SachGiaoKhoa_Cap2)sgk;
-				this.list.set(count, sgk_c2);
-				count++;
-			}
-		}
-		
-		for (SachGiaoKhoa sgk : list) {
-			if(sgk instanceof SachGiaoKhoa_Cap3) {
-				SachGiaoKhoa_Cap3 sgk_c3=new SachGiaoKhoa_Cap3();
-				sgk_c3=(SachGiaoKhoa_Cap3)sgk;
-				this.list.set(count, sgk_c3);
-				count++;
-			}
-		}
-		
-	}
 }
