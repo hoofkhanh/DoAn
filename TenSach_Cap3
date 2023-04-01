@@ -1,0 +1,30 @@
+package sach;
+
+public enum TenSach_Cap3 {
+	//Các hằng số đã được định nghĩa
+	Toan("Toán"),
+	LichSu("Lịch Sử"),
+	SinhHoc("Sinh Học"),
+	CongNghe("Công Nghê"),
+	NguVan("Ngữ Văn"),
+	DiaLy("Địa Lý"),
+	GiaoDucCongDan("Giáo Dục Công Dân"),
+	NgoaiNgu("Ngoại Ngữ"),
+	TheDuc("Thể Dục"),
+	AmNhac("Âm Nhạc"),
+	MyThuat("Mỹ Thuật"),
+	TinHoc("Tin Học"),
+	Hoa("Hóa"),
+	VatLi("Vật Lí");
+
+	public String getName_Cap3() {
+		return name_Cap3;
+	}
+
+	//Thuộc tính
+	private final String name_Cap3;
+
+	private TenSach_Cap3(String name_Cap3) {
+		this.name_Cap3 = name_Cap3;
+	}
+}
