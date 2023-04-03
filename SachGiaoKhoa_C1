@@ -1,6 +1,4 @@
 package sach;
-
-import java.util.Objects;
 import java.util.Scanner;
 
 public class SachGiaoKhoa_Cap1 extends SachGiaoKhoa {
@@ -14,6 +12,7 @@ public class SachGiaoKhoa_Cap1 extends SachGiaoKhoa {
 	
 	public SachGiaoKhoa_Cap1() {
 	}
+	
 
 	public TenSach_Cap1 getTenSach_Cap1() {
 		return tenSach_Cap1;
@@ -35,7 +34,6 @@ public class SachGiaoKhoa_Cap1 extends SachGiaoKhoa {
 	public void nhap() {
 		Scanner sc = new Scanner(System.in);
 		super.nhap();
-
 		int chon;
 		do {
 			System.out.println("");
@@ -84,7 +82,60 @@ public class SachGiaoKhoa_Cap1 extends SachGiaoKhoa {
 		} while (chon != 1 && chon != 2 && chon != 3 && chon != 4 && chon != 5 && chon != 6 && chon != 7 && chon != 8
 				&& chon != 9 && chon != 10 && chon != 11);
 	}
+	
+	@Override
+	public void chinhSuaThongTin() {
+		Scanner sc = new Scanner(System.in);
+		super.chinhSuaThongTin();
+		int chon;
+		do {
+			System.out.println("");
+			System.out.println("-----Hãy chọn tên sách cấp 1-----");
+			System.out.println("1. Toán");
+			System.out.println("2. Tiếng Việt");
+			System.out.println("3. Tự Nhiên Và Xã Hội");
+			System.out.println("4. Lịch Sử");
+			System.out.println("5. Địa Lý");
+			System.out.println("6. Âm Nhạc");
+			System.out.println("7. Mỹ Thuật");
+			System.out.println("8. Đạo Đức");
+			System.out.println("9. Thể Dục");
+			System.out.println("10.Công Nghệ");
+			System.out.println("11.Ngoại Ngữ");
+			System.out.println("");
+			chon = sc.nextInt();
+			sc.nextLine();
 
+			//ràng buộc nếu chọn khác số trong menu tên sách thì nhập lại
+			if (chon == 1) {
+				this.setTenSach_Cap1(TenSach_Cap1.Toan);
+			} else if (chon == 2) {
+				this.setTenSach_Cap1(TenSach_Cap1.TiengViet);
+			} else if (chon == 3) {
+				this.setTenSach_Cap1(TenSach_Cap1.TuNhienVaXaHoi);
+			} else if (chon == 4) {
+				this.setTenSach_Cap1(TenSach_Cap1.LichSu);
+			} else if (chon == 5) {
+				this.setTenSach_Cap1(TenSach_Cap1.DiaLy);
+			} else if (chon == 6) {
+				this.setTenSach_Cap1(TenSach_Cap1.AmNhac);
+			} else if (chon == 7) {
+				this.setTenSach_Cap1(TenSach_Cap1.MyThuat);
+			} else if (chon == 8) {
+				this.setTenSach_Cap1(TenSach_Cap1.DaoDuc);
+			} else if (chon == 9) {
+				this.setTenSach_Cap1(TenSach_Cap1.TheDuc);
+			} else if (chon == 10) {
+				this.setTenSach_Cap1(TenSach_Cap1.CongNghe);
+			} else if (chon == 11) {
+				this.setTenSach_Cap1(TenSach_Cap1.NgoaiNgu);
+			} else {
+				System.out.println("Vui lòng chọn tên sách thích hợp !");
+			}
+		} while (chon != 1 && chon != 2 && chon != 3 && chon != 4 && chon != 5 && chon != 6 && chon != 7 && chon != 8
+				&& chon != 9 && chon != 10 && chon != 11);
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString() + "SachGiaoKhoa_Cap1 [tenSach_Cap1=" + tenSach_Cap1.getName_Cap1() + "]";
@@ -95,16 +146,5 @@ public class SachGiaoKhoa_Cap1 extends SachGiaoKhoa {
 		return this.getMaSach().compareTo(o.getMaSach());
 	}
 	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SachGiaoKhoa_Cap1 other = (SachGiaoKhoa_Cap1) obj;
-		return tenSach_Cap1 == other.tenSach_Cap1;
-	}
-
+	
 }
