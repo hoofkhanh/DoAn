@@ -1,5 +1,6 @@
 package menu;
 
+import java.io.File;
 import java.util.Scanner;
 
 import sach.QuanLyKhoSach;
@@ -9,10 +10,10 @@ import sach.SachGiaoKhoa_Cap2;
 import sach.SachGiaoKhoa_Cap3;
 
 public class Menu {
-	Scanner sc=new Scanner(System.in);
-	QuanLyKhoSach list=new QuanLyKhoSach();
+	Scanner sc = new Scanner(System.in);
+	QuanLyKhoSach list = new QuanLyKhoSach();
 	SachGiaoKhoa sgk;
-	
+
 	public void menu() {
 		int chon=0;
 		do {
@@ -24,10 +25,10 @@ public class Menu {
 			System.out.println("4. In Sách Giáo Khoa Cấp 2");
 			System.out.println("5. In Sách Giáo Khoa Cấp 3");
 			System.out.println("6. Kiểm Tra Danh Sách Rỗng");
-			System.out.println("7. Số Lượng Sách Giáo Khoa Hiện Có");
-			System.out.println("8. Số Lượng Sách Giáo Khoa Cấp 1");
-			System.out.println("9. Số Lượng Sách Giáo Khoa Cấp 2");
-			System.out.println("10.Số Lượng Sách Giáo Khoa Cấp 3");
+			System.out.println("7. Số Lượng Sách Giáo Khoa Hiện Có Trong Danh Sách");
+			System.out.println("8. Số Lượng Sách Giáo Khoa Cấp 1 Trong Danh Sách");
+			System.out.println("9. Số Lượng Sách Giáo Khoa Cấp 2 Trong Danh Sách");
+			System.out.println("10.Số Lượng Sách Giáo Khoa Cấp 3 Trong Danh Sách");
 			System.out.println("11.Làm Rỗng Danh Sách");
 			System.out.println("12.Kiểm Tra Tồn Tại ( Theo Mã Sách)");
 			System.out.println("13.Tìm Sách (Theo Mã Sách)");
@@ -37,6 +38,10 @@ public class Menu {
 			System.out.println("17.Sắp Xếp Giảm Dần (Theo Số Lượng)");
 			System.out.println("18.Sắp Xếp Tăng Dần (Theo Mã Sách)");
 			System.out.println("19.Sắp Xếp Giảm Dần (Theo Mã Sách)");
+			System.out.println("20.Xóa Sách ( Theo Tên Sách)");
+			System.out.println("21.Chỉnh Sửa Thông Tin (Theo Mã Sách )");
+			System.out.println("22.Lưu File");
+			System.out.println("23.Đọc File");
 			System.out.println("0. Thoát");
 			System.out.println("");
 			chon=sc.nextInt();
@@ -80,13 +85,13 @@ public class Menu {
 			}else if(chon==6) {
 				System.out.println("Danh Sách Có Rỗng Không : "+this.list.kiemTraDanhSachRong());
 			}else if(chon==7) {
-				System.out.println("Số Lượng Sách Hiện Có : "+this.list.soLuongSachHienCo());
+				System.out.println("Số Lượng Sách Hiện Có Trong Danh Sách : "+this.list.soLuongSachHienCo());
 			}else if(chon==8) {
-				System.out.println("Số Lượng Sách Giáo Khóa Cấp 1 : "+this.list.soluongSachGiaoKhoa_Cap1());
+				System.out.println("Số Lượng Sách Giáo Khóa Cấp 1 Trong Danh Sách: "+this.list.soluongSachGiaoKhoa_Cap1_TrongDanhSach());
 			}else if(chon==9) {
-				System.out.println("Số Lượng Sách Giáo Khóa Cấp 2 : "+this.list.soluongSachGiaoKhoa_Cap2());
+				System.out.println("Số Lượng Sách Giáo Khóa Cấp 2 Trong Danh Sách: "+this.list.soluongSachGiaoKhoa_Cap2_TrongDanhSach());
 			}else if(chon==10) {
-				System.out.println("Số Lượng Sách Giáo Khóa Cấp 3 : "+this.list.soluongSachGiaoKhoa_Cap3());
+				System.out.println("Số Lượng Sách Giáo Khóa Cấp 3 Trong Danh Sách: "+this.list.soluongSachGiaoKhoa_Cap3_TrongDanhSach());
 			}else if(chon==11) {
 				this.list.lamRongDanhSach();
 			}else if(chon==12) {
@@ -104,7 +109,7 @@ public class Menu {
 			}else if(chon==15) {
 				System.out.println("Nhập Mã Sách Bạn Muốn Xóa");
 				String maSach=sc.nextLine();
-				this.list.xoaSach_TheoMaSach(maSach);
+				System.out.println("Xóa Sách Thành Công : "+this.list.xoaSach_TheoMaSach(maSach));
 			}else if(chon==16) {
 				this.list.sapXepTangDan_TheoSoLuong();
 				this.list.inDanhSach();
@@ -117,8 +122,26 @@ public class Menu {
 			}else if(chon==19) {
 				this.list.sapXepGiamDan_TheoMaSach();
 				this.list.inDanhSach();
-			}else if(chon!=0) {
-				System.out.println("Bạn Đã Thoát Khỏi Menu Xin Cảm Ơn !");
+			}else if(chon==20) {
+				System.out.println("Nhập tên sách bạn muốn xóa");
+				String ten=sc.nextLine();
+				this.list.xoaSach_TheoTenSach(ten);
+			}else if(chon==21) {
+				System.out.println("Nhập mã sách mà bạn muốn chỉnh sửa thông tin");
+				String maSach=sc.nextLine();
+				this.list.chinhSuaThongTin_TheoMaSach(maSach);
+			}else if(chon==22) {
+				System.out.println("Nhập đường dẫn file bạn muốn lưu");
+				String file=sc.nextLine();
+				File tenFile=new File(file);
+				this.list.luuFile(tenFile);
+			}else if(chon==23) {
+				System.out.println("Nhập đường dẫn file bạn muốn đọc");
+				String file=sc.nextLine();
+				File tenFile=new File(file);
+				this.list.docFile(tenFile);
+			}else if(chon==0) {
+				System.out.println("Bạn Đã Thoát Khỏi Menu Xin Cảm Ơn !");		
 			}
 		}while(chon!=0);
 	}
