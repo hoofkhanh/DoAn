@@ -1,7 +1,14 @@
 package sach;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -18,7 +25,12 @@ public class QuanLyKhoSach {
 	}
 	
 	public void themVaoDanhSach(SachGiaoKhoa sgk) {
-		this.list.add(sgk);
+		if(!kiemTraTonTai_TheoMaSach(sgk.getMaSach())) {
+			this.list.add(sgk);
+		}else {
+			System.out.println("Đã Trùng Mã Sách , Không Thể Vào Danh Sách !");
+			return;
+		}
 	}
 	
 	public void inDanhSach() {
@@ -36,7 +48,7 @@ public class QuanLyKhoSach {
 		return this.list.size();
 	}
 	
-	public int soluongSachGiaoKhoa_Cap1() {
+	public int soluongSachGiaoKhoa_Cap1_TrongDanhSach() {
 		int count=0;
 		for(SachGiaoKhoa sgk :list) {
 			if(sgk instanceof SachGiaoKhoa_Cap1 )
@@ -45,7 +57,7 @@ public class QuanLyKhoSach {
 		return count;
 	}
 	
-	public int soluongSachGiaoKhoa_Cap2() {
+	public int soluongSachGiaoKhoa_Cap2_TrongDanhSach() {
 		int count=0;
 		for(SachGiaoKhoa sgk :list) {
 			if(sgk instanceof SachGiaoKhoa_Cap2 )
@@ -54,7 +66,7 @@ public class QuanLyKhoSach {
 		return count;
 	}
 	
-	public int soluongSachGiaoKhoa_Cap3() {
+	public int soluongSachGiaoKhoa_Cap3_TrongDanhSach() {
 		int count=0;
 		for(SachGiaoKhoa sgk :list) {
 			if(sgk instanceof SachGiaoKhoa_Cap3 )
@@ -73,12 +85,7 @@ public class QuanLyKhoSach {
 	}
 	
 	public boolean kiemTraTonTai_TheoMaSach(String maSach) {
-		if(this.list.size()==0) {
-			System.out.println("Danh sách đã rỗng không thể kiểm tra sự tồn tại");
-			return false;
-		}
-		
-		for(SachGiaoKhoa sgk : list) {
+		for (SachGiaoKhoa sgk : list) {
 			if(sgk.getMaSach().equals(maSach)) {
 				return true;
 			}
@@ -108,34 +115,45 @@ public class QuanLyKhoSach {
 		for(SachGiaoKhoa sgk :list) {
 			if(sgk instanceof SachGiaoKhoa_Cap1) {
 				SachGiaoKhoa_Cap1 sgk_c1=(SachGiaoKhoa_Cap1)sgk;
-				if((sgk_c1.getTenSach_Cap1().getName_Cap1()).equals(tenSach)) {
+				if((sgk_c1.getTenSach_Cap1().getName_Cap1()).equalsIgnoreCase(tenSach)) {
 					System.out.println(sgk_c1);
 				}
 			}else if(sgk instanceof SachGiaoKhoa_Cap2) {
 				SachGiaoKhoa_Cap2 sgk_c2=(SachGiaoKhoa_Cap2)sgk;
-				if((sgk_c2.getTenSach_Cap2().getName_Cap2()).equals(tenSach)) {
+				if((sgk_c2.getTenSach_Cap2().getName_Cap2()).equalsIgnoreCase(tenSach)) {
 					System.out.println(sgk_c2);
 				}
 			}else if(sgk instanceof SachGiaoKhoa_Cap3) {
 				SachGiaoKhoa_Cap3 sgk_c3=(SachGiaoKhoa_Cap3)sgk;
-				if((sgk_c3.getTenSach_Cap3().getName_Cap3()).equals(tenSach)){
+				if((sgk_c3.getTenSach_Cap3().getName_Cap3()).equalsIgnoreCase(tenSach)){
 					System.out.println(sgk_c3);
 				}
 			}
 		}
 	}
 	
-	public void xoaSach_TheoMaSach(String maSach) {
+	public boolean xoaSach_TheoMaSach(String maSach) {
 		if(this.list.size()==0) {
 			System.out.println("Danh sách đã rỗng không thể xóa sách");
-			return ;
+			return false;
 		}
 		
-		for(SachGiaoKhoa sgk:list) {
-			if(sgk.getMaSach().equals(maSach)){
-				this.list.remove(sgk);
+		for(int i=0;i<this.list.size();i++) {
+			SachGiaoKhoa sgk=this.list.get(i);
+			if(sgk.getMaSach().equals(maSach)) {
+				this.list.remove(i);
+				return true;
 			}
 		}
+		return false;
+		
+//		   Iterator<SachGiaoKhoa> iter = this.list.iterator();
+//		    while (iter.hasNext()) {
+//		        SachGiaoKhoa sgk = iter.next();
+//		        if (sgk.getMaSach().equals(maSach)) {
+//		            iter.remove();
+//		        }
+//		    }
 	}
 	
 	public void sapXepTangDan_TheoSoLuong() {
@@ -212,5 +230,83 @@ public class QuanLyKhoSach {
 		}
 	}
 	
-		
+	public void luuFile(File f) {
+		try {
+			OutputStream os=new FileOutputStream(f);
+			ObjectOutputStream oos=new ObjectOutputStream(os);
+			for (SachGiaoKhoa sgk : list) {
+				oos.writeObject(sgk);
+			}
+			System.out.println("Đã ghi file vào "+f.getAbsolutePath());
+			oos.flush();
+			oos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void docFile(File f) {
+		try {
+			ObjectInputStream ois=new ObjectInputStream(new FileInputStream(f));
+			SachGiaoKhoa sgk;
+			while(true) {
+				try {
+					sgk=(SachGiaoKhoa)ois.readObject();
+					this.list.add(sgk);
+				} catch (Exception e) {
+					break;
+				}
+			}
+			System.out.println("Đã đọc file "+f.getAbsolutePath());
+			ois.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void xoaSach_TheoTenSach(String tenSach) {
+		for(int i=0;i<this.list.size();i++) {
+			SachGiaoKhoa sgk=this.list.get(i);
+			if(sgk instanceof SachGiaoKhoa_Cap1) {
+				SachGiaoKhoa_Cap1 sgk_c1=(SachGiaoKhoa_Cap1)sgk;
+				if((sgk_c1.getTenSach_Cap1().getName_Cap1()).equalsIgnoreCase(tenSach)) {
+					this.list.remove(i);
+					System.out.println("Đã xóa sách có mã số : "+sgk_c1.getMaSach());
+				}
+			}else if(sgk instanceof SachGiaoKhoa_Cap2) {
+				SachGiaoKhoa_Cap2 sgk_c2=(SachGiaoKhoa_Cap2)sgk;
+				if((sgk_c2.getTenSach_Cap2().getName_Cap2()).equalsIgnoreCase(tenSach)) {
+					this.list.remove(i);
+					System.out.println("Đã xóa sách có mã số : "+sgk_c2.getMaSach());
+				}
+			}else if(sgk instanceof SachGiaoKhoa_Cap3) {
+				SachGiaoKhoa_Cap3 sgk_c3=(SachGiaoKhoa_Cap3)sgk;
+				if((sgk_c3.getTenSach_Cap3().getName_Cap3()).equalsIgnoreCase(tenSach)) {
+					this.list.remove(i);
+					System.out.println("Đã xóa sách có mã số : "+sgk_c3.getMaSach());
+				}
+			}
+		}
+	}
+	
+	public void chinhSuaThongTin_TheoMaSach(String maSach) {
+		for(int i=0;i<this.list.size();i++) {
+			SachGiaoKhoa sgk=this.list.get(i);
+			if(sgk.getMaSach().equals(maSach)) {
+				if(sgk instanceof SachGiaoKhoa_Cap1) {
+					SachGiaoKhoa_Cap1 sgk_c1=(SachGiaoKhoa_Cap1)this.list.get(i);
+					sgk_c1.chinhSuaThongTin();
+					this.list.set(i, sgk_c1);
+				}else if(sgk instanceof SachGiaoKhoa_Cap2) {
+					SachGiaoKhoa_Cap2 sgk_c2=(SachGiaoKhoa_Cap2)this.list.get(i);
+					sgk_c2.chinhSuaThongTin();
+					this.list.set(i, sgk_c2);
+				}else if(sgk instanceof SachGiaoKhoa_Cap3) {
+					SachGiaoKhoa_Cap3 sgk_c3=(SachGiaoKhoa_Cap3)this.list.get(i);	
+					sgk_c3.chinhSuaThongTin();
+					this.list.set(i, sgk_c3);
+				}
+			}
+		}
+	}
 }
