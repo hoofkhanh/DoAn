@@ -42,6 +42,7 @@ public class Menu {
 			System.out.println("21.Chỉnh Sửa Thông Tin (Theo Mã Sách )");
 			System.out.println("22.Lưu File");
 			System.out.println("23.Đọc File");
+			System.out.println("24.Kiểm tra sách mới (số năm lớn hơn 2021)");
 			System.out.println("0. Thoát");
 			System.out.println("");
 			chon=sc.nextInt();
@@ -139,9 +140,15 @@ public class Menu {
 				System.out.println("Nhập đường dẫn file bạn muốn đọc");
 				String file=sc.nextLine();
 				File tenFile=new File(file);
-				this.list.docFile(tenFile);
+				this.list.docFile(tenFile);	
+			}else if(chon==24) {
+				System.out.println("Nhập mã sách bạn muốn kiểm tra");
+				String maSach=sc.nextLine();
+				System.out.println("Sách mới :"+this.list.KiemTraSachMoi_TheoMaSach(maSach));
 			}else if(chon==0) {
 				System.out.println("Bạn Đã Thoát Khỏi Menu Xin Cảm Ơn !");		
+			}else {
+				System.out.println("Vui lòng chọn trong menu");
 			}
 		}while(chon!=0);
 	}
