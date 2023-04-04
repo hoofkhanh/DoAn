@@ -309,4 +309,21 @@ public class QuanLyKhoSach {
 			}
 		}
 	}
+	
+	public boolean KiemTraSachMoi_TheoMaSach(String maSach) {
+		for (SachGiaoKhoa sgk : list) {
+			if(sgk instanceof SachGiaoKhoa_Cap1) {
+				SachGiaoKhoa_Cap1 sgk_c1=(SachGiaoKhoa_Cap1)sgk;
+				return sgk_c1.kiemTraSachMoi();
+			}else if(sgk instanceof SachGiaoKhoa_Cap2) {
+				SachGiaoKhoa_Cap2 sgk_c2=(SachGiaoKhoa_Cap2)sgk;
+				return sgk_c2.kiemTraSachMoi();
+			}else if(sgk instanceof SachGiaoKhoa_Cap3) {
+				SachGiaoKhoa_Cap3 sgk_c3=(SachGiaoKhoa_Cap3)sgk;
+				return sgk_c3.kiemTraSachMoi();
+			}
+		}
+		System.out.println("Không có sách mà bạn đã nhập");
+		return false;
+	}
 }
